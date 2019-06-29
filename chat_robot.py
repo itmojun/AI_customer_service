@@ -38,9 +38,15 @@ def get_robot_reply(question):
 
 if __name__ == '__main__':
     # 测试get_robot_reply函数
-    print(get_robot_reply("你叫什么名字"))    
-    print(get_robot_reply("你多少岁"))
-    print(get_robot_reply("武汉明天天气如何"))
-    print(get_robot_reply("你是男是女"))
-    print(get_robot_reply("你到底是谁"))
+    # print(get_robot_reply("你叫什么名字"))    
+    # print(get_robot_reply("你多少岁"))
+    # print(get_robot_reply("武汉明天天气如何"))
+    # print(get_robot_reply("你是男是女"))
+    # print(get_robot_reply("你到底是谁"))
+
+    while True:
+        question = input("\n我说：")
+        answer = get_robot_reply(question)
+        print("\n小魔仙说：%s" % answer)
+
     
