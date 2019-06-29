@@ -1,3 +1,10 @@
+'''
+文件描述：基于微信公众号实现AI客服
+作者：dj
+邮箱：dj@itmojun.com
+时间：2019-6-29 16:05
+'''
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
