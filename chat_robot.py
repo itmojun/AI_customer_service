@@ -11,6 +11,12 @@
 
 import urllib.request
 import urllib.parse
+import flask
+from wechatpy.utils import check_signature
+from wechatpy.exceptions import InvalidSignatureException
+
+
+app = flask.Flask(__name__)
 
 
 def get_robot_reply(question):
@@ -43,6 +49,28 @@ def get_robot_reply(question):
     return answer
 
 
+@app.route("/wx", methods=["GET", "POST"])
+def weixin_handler():
+    token = "zhouzhiyong"
+    signature = flask.request.args.get("signature")
+    timestamp = flask.request.args.get("timestamp")
+    nonce = flask.request.args.get("nonce")
+    echostr = flask.request.args.get("echostr")
+
+    try:
+        # 校验token
+        check_signature(token, signature, timestamp, nonce)
+    except InvalidSignatureException:
+        # 处理异常情况或忽略
+        flask.abort(403)  # 校验token失败，证明这条消息不是微信服务器发送过来的
+    
+    if flask.request.method == "GET":
+        return echostr
+    elif flask.request.method == "POST":
+        print(flask.request.data)
+        
+
+
 if __name__ == '__main__':
     # 测试get_robot_reply函数
     # print(get_robot_reply("你叫什么名字"))    
@@ -51,9 +79,10 @@ if __name__ == '__main__':
     # print(get_robot_reply("你是男是女"))
     # print(get_robot_reply("你到底是谁"))
 
-    while True:
-        question = input("\n我说：")
-        answer = get_robot_reply(question)
-        print("\n小魔仙说：%s" % answer)
+    # while True:
+    #     question = input("\n我说：")
+    #     answer = get_robot_reply(question)
+    #     print("\n小魔仙说：%s" % answer)
+    app.run(debug=True, host="0.0.0.0", port="80")
 
     
